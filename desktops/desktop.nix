@@ -4,18 +4,30 @@
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
   sound.enable = true;
-  hardware.pulseaudio.enable = true;
+
+  networking.networkmanager.enable = true;
+  virtualisation.libvirtd.enable = true;
 
   hardware.bluetooth.enable = true;
-  services.blueman.enable = true;
+  hardware.pulseaudio.enable = true;
 
   programs.steam.enable = true;
 
-  virtualisation.libvirtd.enable = true;
+  services.openssh.enable = true;
+  services.blueman.enable = true;
+  services.printing.enable = true;
+
+  # Syncthing ports
+  networking.firewall.allowedTCPPorts = [ 8384 22000 ];
+  networking.firewall.allowedUDPPorts = [ 22000 21027 ];
+
+  virtualisation.docker.enable = true;
+
+  # LATER
+  # programs.gnupg.agent.enable = true;
+  # programs.gnupg.agent.enableSSHSupport = true;
 
   services = {
-    printing.enable = true;
-
     xserver = {
       enable = true;
       exportConfiguration = true;
@@ -26,7 +38,6 @@
       libinput = {
         enable = true;
         touchpad.naturalScrolling = false;
-        # accelProfile = "flat";
       };
 
       displayManager = {

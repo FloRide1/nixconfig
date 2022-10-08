@@ -2,7 +2,7 @@
 
 # Don't forget to set a password with ‘passwd’.
 {
-  description = "Florian Reimat";
+  description = "FloRide";
   isNormalUser = true;
   createHome = true;
   extraGroups = [ "wheel" "networkmanager" "libvirtd" "docker" ];
