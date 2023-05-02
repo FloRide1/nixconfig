@@ -6,5 +6,5 @@
   isNormalUser = true;
   createHome = true;
   extraGroups = [ "wheel" "networkmanager" "libvirtd" "docker" ];
-  shell = pkgs.zsh;
+  shell = pkgs.fish;
 }

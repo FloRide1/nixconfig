@@ -32,7 +32,15 @@
   users.users.floride = import ./users/floride.nix { inherit pkgs; };
   home-manager.users.floride = import ../nixhome/home.nix;
 
-  environment.systemPackages = with pkgs; [ vim wget git firefox alacritty ];
+  environment.shells = with pkgs; [ fish ];
+  environment.systemPackages = with pkgs; [
+    vim
+    wget
+    git
+    firefox
+    alacritty
+    fish
+  ];
 
   # Allow unfree package  
   nixpkgs.config.allowUnfree = true;
