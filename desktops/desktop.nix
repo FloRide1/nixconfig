@@ -27,6 +27,8 @@
   # programs.gnupg.agent.enable = true;
   # programs.gnupg.agent.enableSSHSupport = true;
 
+  programs.fish.enable = true;
+
   services = {
     xserver = {
       enable = true;

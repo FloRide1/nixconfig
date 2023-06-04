@@ -5,6 +5,6 @@
   description = "FloRide";
   isNormalUser = true;
   createHome = true;
-  extraGroups = [ "wheel" "networkmanager" "libvirtd" "docker" ];
-  shell = pkgs.zsh;
+  extraGroups = [ "wheel" "networkmanager" "libvirtd" "docker" "dialout" ];
+  shell = pkgs.fish;
 }
