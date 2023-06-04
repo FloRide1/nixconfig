@@ -29,15 +29,7 @@
         canTouchEfiVariables = true;
       };
 
-      #timeout = 0;
-      grub = {
-        enable = true;
-        version = 2;
-        device = "nodev";
-        efiSupport = true;
-        enableCryptodisk = true;
-        useOSProber = true;
-      };
+      systemd-boot.enable = true;
       #systemd-boot.configurationLimit = 5;
     };
   };
@@ -68,8 +60,8 @@
     };
 
     "/storage" = {
-      device = "/dev/disk/by-uuid/9C882C65882C405E";
-      fsType = "ntfs";
+      device = "/dev/disk/by-uuid/91c2c6df-952d-4ab7-a50f-2ac2eefd7f09";
+      fsType = "ext4";
     };
   };
 
