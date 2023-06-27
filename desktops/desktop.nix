@@ -16,6 +16,7 @@
   services.openssh.enable = true;
   services.blueman.enable = true;
   services.printing.enable = true;
+  services.tailscale.enable = true;
 
   # Syncthing ports
   networking.firewall.allowedTCPPorts = [ 8384 22000 ];
