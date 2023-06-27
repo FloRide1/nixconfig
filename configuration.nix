@@ -32,6 +32,10 @@
   users.users.floride = import ./users/floride.nix { inherit pkgs; };
   home-manager.users.floride = import ../nixhome/home.nix;
 
+  networking.extraHosts = ''
+    127.0.0.1 dps.epita.local
+  '';
+
   environment.shells = with pkgs; [ fish ];
   environment.systemPackages = with pkgs; [
     vim
