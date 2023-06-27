@@ -46,6 +46,9 @@
     fish
   ];
 
+  nix.gc.automatic = true;
+  nix.gc.options = "--delete-older-than 8d";
+
   # Allow unfree package  
   nixpkgs.config.allowUnfree = true;
 
