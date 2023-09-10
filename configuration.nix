@@ -1,10 +1,13 @@
 { config, pkgs, ... }:
 
+let 
+  home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/master.tar.gz";
+in
 {
   imports = [
     ./desktops/desktop.nix
     ./desktops/machines/zenk.nix
-    <home-manager/nixos>
+    (import "${home-manager}/nixos")
   ];
 
   # Default
@@ -31,6 +34,7 @@
   # Define a users
   users.users.floride = import ./users/floride.nix { inherit pkgs; };
   home-manager.users.floride = import ../nixhome/home.nix;
+
 
   networking.extraHosts = ''
     127.0.0.1 dps.epita.local
