@@ -11,19 +11,15 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
-  # Setup keyfile
-  boot.initrd.secrets = { "/crypto_keyfile.bin" = null; };
-
-  # Enable swap on luks
-  boot.initrd.luks.devices."luks-05d54e16-6a51-4228-a93e-fdbd0638cc19".device =
-    "/dev/disk/by-uuid/05d54e16-6a51-4228-a93e-fdbd0638cc19";
-  boot.initrd.luks.devices."luks-3bfb2e3f-b04b-43e1-98af-6ac74458398b".device =
-    "/dev/disk/by-uuid/3bfb2e3f-b04b-43e1-98af-6ac74458398b";
-  boot.initrd.luks.devices."luks-3bfb2e3f-b04b-43e1-98af-6ac74458398b".keyFile =
-    "/crypto_keyfile.bin";
-
-  boot.initrd.availableKernelModules =
-    [ "xhci_pci" "ahci" "nvme" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
+  boot.initrd.availableKernelModules = [
+    "xhci_pci"
+    "ahci"
+    "nvme"
+    "usb_storage"
+    "usbhid"
+    "sd_mod"
+    "rtsx_pci_sdmmc"
+  ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.kernelParams = [ "i915.force_probe=8a56" ];
@@ -32,22 +28,18 @@
   networking.hostName = "zenk"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-  fileSystems."/boot/efi" = {
-    device = "/dev/disk/by-uuid/68AA-492A";
-    fsType = "vfat";
-  };
-
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/671aa066-2283-4fd4-9dde-71ff6863b379";
+    device = "/dev/disk/by-uuid/02c3b24f-0535-4d24-b1c4-7b497243605c";
     fsType = "ext4";
   };
 
+  fileSystems."/boot/efi" = {
+    device = "/dev/disk/by-uuid/1181-321F";
+    fsType = "vfat";
+  };
+
   swapDevices =
-    [{ device = "/dev/disk/by-uuid/ca02834e-d4ee-44ef-8a66-50a48ec25ad4"; }];
+    [{ device = "/dev/disk/by-uuid/52fb8889-7e1b-403e-8543-c8b168f0bdab"; }];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
