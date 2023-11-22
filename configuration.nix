@@ -6,7 +6,7 @@ let
 in {
   imports = [
     ./desktops/desktop.nix
-    ./desktops/machines/zenk.nix
+    ./desktops/machines/legion.nix
     (import "${home-manager}/nixos")
   ];
 
@@ -53,8 +53,10 @@ in {
   nix.gc.options = "--delete-older-than 8d";
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
+  time.hardwareClockInLocalTime = true;
+
   # Allow unfree package  
   nixpkgs.config.allowUnfree = true;
 
-  system.stateVersion = "22.05";
+  system.stateVersion = "23.11";
 }
