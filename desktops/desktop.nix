@@ -9,6 +9,8 @@
   virtualisation.libvirtd.enable = true;
 
   hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
+
   hardware.pulseaudio.enable = true;
 
   programs.steam.enable = true;
