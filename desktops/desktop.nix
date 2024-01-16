@@ -26,34 +26,32 @@
 
   virtualisation.docker.enable = true;
 
-  # LATER
-  # programs.gnupg.agent.enable = true;
-  # programs.gnupg.agent.enableSSHSupport = true;
+  security.polkit.enable = true;
 
   programs.fish.enable = true;
+  programs.hyprland.enable = true;
 
-  services = {
-    xserver = {
-      enable = true;
-      exportConfiguration = true;
+  services.xserver = {
+    layout = "gb";
+    xkbVariant = "extd";
+    enable = true;
+  };
 
-      layout = "gb";
-      xkbVariant = "extd";
+  security.pam.services.swaylock = { };
 
-      libinput = {
-        enable = true;
-        touchpad.naturalScrolling = false;
+  services.greetd = {
+    enable = true;
+    settings = {
+      default_session = {
+        command = "${pkgs.hyprland}/bin/Hyprland";
+        user = "floride";
       };
 
-      displayManager = {
-        defaultSession = "none+i3";
-        lightdm.enable = true;
-      };
-
-      windowManager.i3 = {
-        enable = true;
-        package = pkgs.i3-gaps;
-      };
     };
   };
+
+  environment.etc."greetd/environments".text = ''
+    Hyprland
+  '';
+
 }
