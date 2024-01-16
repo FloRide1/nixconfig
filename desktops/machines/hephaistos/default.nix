@@ -4,15 +4,11 @@ let cfg = config.hardware.framework.amd-7040;
 in {
   imports = [ ./framework/13-inch/7040-amd/default.nix ];
 
-  boot.initrd.availableKernelModules = [
-    "xhci_pci"
-    "ahci"
-    "nvme"
-    "usb_storage"
-    "usbhid"
-    "sd_mod"
-    "rtsx_pci_sdmmc"
-  ];
+  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "thunderbolt" ];
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+
+  boot.initrd.kernelModules = [ "amdgpu" ];
+  boot.kernelModules = [ "kvm-amd" ];
 
   services.fwupd.enable = true;
 
@@ -35,6 +31,20 @@ in {
   networking.hostName = "hephaistos";
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
+  # Enable PCSCD for smart card
+  services.pcscd.enable = true;
+
+  # Digital
+  services.fprintd.enable = true;
+
+  # Disable Power Button
+  services.logind.extraConfig = ''
+    # don’t shutdown when power button is short-pressed
+    HandlePowerKey=ignore
+  '';
+
+  services.xserver.videoDrivers = [ "amdgpu" ];
+
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/02c3b24f-0535-4d24-b1c4-7b497243605c";
     fsType = "ext4";
@@ -51,4 +61,8 @@ in {
   networking.useDHCP = lib.mkDefault true;
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  hardware.cpu.amd.updateMicrocode =
+    lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
