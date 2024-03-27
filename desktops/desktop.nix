@@ -20,6 +20,16 @@
   services.printing.enable = true;
   services.tailscale.enable = true;
 
+  services.avahi = {
+    enable = true;
+    nssmdns = true;
+    openFirewall = true;
+  };
+
+  hardware.sane.enable = true;
+  hardware.sane.extraBackends = [ pkgs.utsushi ];
+  services.udev.packages = [ pkgs.utsushi ];
+
   # Syncthing ports
   networking.firewall.allowedTCPPorts = [ 8384 22000 ];
   networking.firewall.allowedUDPPorts = [ 22000 21027 ];

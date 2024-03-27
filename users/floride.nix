@@ -5,6 +5,7 @@
   description = "FloRide";
   isNormalUser = true;
   createHome = true;
-  extraGroups = [ "wheel" "networkmanager" "libvirtd" "docker" "dialout" ];
+  extraGroups =
+    [ "wheel" "networkmanager" "libvirtd" "docker" "dialout" "scanner" "lp" ];
   shell = pkgs.fish;
 }
