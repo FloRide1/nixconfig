@@ -4,7 +4,7 @@
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     ./common/cpu/intel
-    ./common/gpu/nvidia/prime.nix
+    # ./common/gpu/nvidia/prime.nix
     ./common/pc/laptop
     ./common/pc/laptop/ssd
     # ./common/pc/laptop/hdd
@@ -13,8 +13,12 @@
   boot.initrd.availableKernelModules =
     [ "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [ ];
+  boot.kernelModules = [ "kvm-intel" "nvidia" ];
+  boot.extraModulePackages = [
+    config.boot.kernelPackages.lenovo-legion-module
+    config.boot.kernelPackages.nvidia_x11
+  ];
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   boot.supportedFilesystems = [ "ntfs" ];
 
@@ -42,7 +46,7 @@
     interfaces.wlp0s20f3.useDHCP = true;
   };
 
-  services.xserver.videoDrivers = [ "nvidia" ];
+  services.xserver.videoDrivers = [ "nvidia" "intel" ];
 
   hardware.cpu.intel.updateMicrocode =
     lib.mkDefault config.hardware.enableRedistributableFirmware;
@@ -52,6 +56,11 @@
     nvidia = {
       modesetting.enable = lib.mkDefault true;
       powerManagement.enable = lib.mkDefault true;
+      powerManagement.finegrained = false;
+
+      open = false;
+      nvidiaSettings = true;
+      package = config.boot.kernelPackages.nvidiaPackages.stable;
 
       /* prime = {
               intelBusId = "PCI:0:2:0"; Why i dont find it ?!?!?
@@ -59,9 +68,29 @@
             };
       */
     };
+
+    opengl = {
+      enable = true;
+      driSupport = true;
+      driSupport32Bit = true;
+
+      extraPackages = with pkgs; [
+        intel-media-driver # LIBVA_DRIVER_NAME=iHD
+        vaapiIntel # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
+        vaapiVdpau
+        libvdpau-va-gl
+      ];
+    };
   };
 
   services.thermald.enable = lib.mkDefault true;
+
+  environment.sessionVariables = {
+    LIBVA_DRIVER_NAME = "nvidia";
+    GBM_BACKEND = "nvidia-drm";
+    __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+    WLR_NO_HARDWARE_CURSORS = "1";
+  };
 
   fileSystems = {
     "/" = {
