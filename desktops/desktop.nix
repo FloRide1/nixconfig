@@ -19,6 +19,7 @@
   services.blueman.enable = true;
   services.printing.enable = true;
   services.tailscale.enable = true;
+  services.tailscale.useRoutingFeatures = "both";
 
   services.avahi = {
     enable = true;
