@@ -11,7 +11,7 @@
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
 
-  hardware.pulseaudio.enable = true;
+  hardware.pulseaudio.enable = false;
 
   programs.steam.enable = true;
 
@@ -22,8 +22,15 @@
 
   services.avahi = {
     enable = true;
-    nssmdns = true;
+    nssmdns4 = true;
     openFirewall = true;
+  };
+
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
   };
 
   hardware.sane.enable = true;
@@ -42,8 +49,8 @@
   programs.hyprland.enable = true;
 
   services.xserver = {
-    layout = "gb";
-    xkbVariant = "extd";
+    xkb.layout = "gb";
+    xkb.variant = "extd";
     enable = true;
   };
 
